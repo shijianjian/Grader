@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar></div>
+  </mat-card-header>
+  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
+  <mat-card-content>
+    <form class="example-container" [formGroup]="options">
+      <mat-checkbox formControlName="hideRequired">Gradable</mat-checkbox>
+      <div>
+        <label>Float label: </label>
+        <mat-radio-group formControlName="floatLabel">
+          <mat-radio-button value="auto">Auto</mat-radio-button>
+          <mat-radio-button value="always">Always</mat-radio-button>
+          <mat-radio-button value="never">Never</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions style="display:flex; flex-direction:row; justify-content:space-between;">
+    <button mat-button>Previous</button>
+    <button mat-button>Next</button>
+  </mat-card-actions>
+</mat-card>

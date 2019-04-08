@@ -7,6 +7,8 @@ import { SharedModule } from '@app/shared';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { QuoteService } from './quote.service';
+import { FileBrowserModule } from './file-browser/file-browser.module';
+import { MainGraderModule } from './main-grader/main-grader.module';
 
 @NgModule({
   imports: [
@@ -14,13 +16,11 @@ import { QuoteService } from './quote.service';
     TranslateModule,
     CoreModule,
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    FileBrowserModule,
+    MainGraderModule
   ],
-  declarations: [
-    HomeComponent
-  ],
-  providers: [
-    QuoteService
-  ]
+  declarations: [HomeComponent],
+  providers: [QuoteService]
 })
-export class HomeModule { }
+export class HomeModule {}
