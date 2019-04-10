@@ -8,3 +8,8 @@
 mat-list {
   color: rgb(80, 77, 77);
 }
+
+mat-list-item:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

@@ -11,8 +11,13 @@ import { QuoteService } from './quote.service';
 export class HomeComponent implements OnInit {
   quote: string;
   isLoading: boolean;
+  images: [];
 
   constructor(private quoteService: QuoteService) {}
+
+  loadImages(event: Event) {
+    this.images = event['images'];
+  }
 
   ngOnInit() {
     this.isLoading = true;

@@ -1,5 +1,7 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
 import { TreeModel, TreeModelSettings } from 'ng2-tree';
+import { FolderTreeService, Image } from '../folder-tree.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file-browser',
@@ -10,25 +12,39 @@ export class FileBrowserComponent implements OnInit {
   @HostBinding('class')
   elementClass = 'app-splits';
 
+  @Output() loadImages = new EventEmitter();
+
   settings: TreeModelSettings = {
     isCollapsedOnInit: true
   };
-  constructor() {}
+  public tree: TreeModel;
+  constructor(private folderTreeService: FolderTreeService) {}
 
-  public tree: TreeModel = {
-    value: 'STDR Fundus',
-    settings: this.settings,
-    children: [
-      {
-        value: 'STDR001',
-        children: [{ value: '2018-07-15' }, { value: '2017-06-25' }, { value: '2016-05-18' }]
-      },
-      {
-        value: 'STDR002',
-        children: [{ value: '2018-07-15' }, { value: '2017-06-25' }, { value: '2016-05-18' }]
+  ngOnInit() {
+    this.folderTreeService.getTree('STDR Fundus').subscribe((tree: TreeModel) => {
+      this.tree = tree;
+    });
+  }
+
+  handleSelected(event: Event) {
+    if (event['node'].children == null) {
+      var node = event['node'];
+      let nodes: string[] = [];
+      nodes.push(node['value']);
+      while (node.parent != null) {
+        node = node.parent;
+        nodes.push(node['value']);
       }
-    ]
-  };
+      this.loadFolder(nodes.reverse());
+    }
+  }
 
-  ngOnInit() {}
+  loadFolder(folder_arr: string[]) {
+    this.folderTreeService
+      .loadFolder(folder_arr)
+      .pipe(take(1))
+      .subscribe((images: Image[]) => {
+        this.loadImages.emit({ images: images });
+      });
+  }
 }

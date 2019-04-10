@@ -1,0 +1,19 @@
+<form [formGroup]="questionFormGroup" (ngSubmit)="onFromSubmit(questionFormGroup.value)">
+  <div *ngFor="let row of dynamicJSON; let i = index">
+    <div class="form-group" [ngSwitch]="row.type">
+      <!-- <input type="{{row.type}}" formControlName="value" class="form-control"  /> -->
+      <!-- the same view can be shown in more than one case -->
+      <mat-radio-group *ngSwitchCase="'radio'" [formControlName]="row.key">
+        <mat-radio-button [value]="item.key" *ngFor="let item of row.items; let i = index">{{
+          item.label
+        }}</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field *ngSwitchCase="'text'">
+        <mat-label>{{ row.label }}</mat-label>
+        <input [formControlName]="row.key" matInput placeholder="{{ row.placeholder }}" />{{ row.value }}
+      </mat-form-field>
+      <div *ngSwitchDefault>...</div>
+    </div>
+  </div>
+  <button [disabled]="!questionFormGroup.valid" class="btn btn-primary">Submit</button>
+</form>

@@ -1,6 +1,6 @@
 <app-loader [isLoading]="isLoading"></app-loader>
 <p [hidden]="isLoading"></p>
 <div style="display: flex; flex-direction: row; width: 100%;">
-  <app-file-browser></app-file-browser>
-  <app-main-grader></app-main-grader>
+  <app-file-browser (loadImages)="loadImages($event)"></app-file-browser>
+  <app-main-grader [images]="images"></app-main-grader>
 </div>

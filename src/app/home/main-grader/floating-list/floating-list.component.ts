@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
+import { Image } from '@app/home/folder-tree.service';
+import { Subscription } from 'rxjs';
+import { FormSelectionService } from '../form-selection.service';
 
 @Component({
   selector: 'app-floating-list',
   templateUrl: './floating-list.component.html',
   styleUrls: ['./floating-list.component.scss']
 })
-export class FloatingListComponent implements OnInit {
-  notes = [
-    {
-      name: 'STDR001_23556_131.img',
-      updated: new Date('2/20/16')
-    },
-    {
-      name: 'STDR001_23556_132.img',
-      updated: new Date('1/18/16')
-    }
-  ];
+export class FloatingListComponent implements OnChanges, OnInit {
+  @Input('images') images: Image[];
+  @Output() clickOn = new EventEmitter();
 
-  constructor() {}
+  // TODO: move initial schema out of the loop
+  schema: string = 'eyebrain';
 
-  ngOnInit() {}
+  ngOnChanges() {
+    this.imageClicked(undefined);
+  }
+
+  constructor(private formSelectionService: FormSelectionService) {}
+
+  ngOnInit() {
+    this.formSelectionService.sendSchema(this.schema);
+  }
+
+  imageClicked(image: {}) {
+    this.clickOn.emit({ image_info: image });
+  }
+
+  onSchemaChange(event: Event) {
+    this.formSelectionService.sendSchema(event['value']);
+  }
 }
