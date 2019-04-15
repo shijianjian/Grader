@@ -9,7 +9,17 @@ mat-list {
   color: rgb(80, 77, 77);
 }
 
-mat-list-item:hover {
+mat-nav-list > mat-list-item:hover {
   cursor: pointer;
   opacity: 0.8;
+  border: 1px solid black;
+}
+
+.selected-image-list {
+  background: #dadee2;
+}
+
+#nav-list {
+  max-height: 40vh;
+  overflow-y: scroll;
 }

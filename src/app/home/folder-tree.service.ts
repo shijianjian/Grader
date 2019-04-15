@@ -4,16 +4,15 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { TreeModel, TreeModelSettings } from 'ng2-tree';
 
-// const routes = {
-//   quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
-// };
-
 export interface Image {
   name: string;
+  status?: string;
   updated?: Date;
-  path?: string[];
+  path?: string;
   src?: string;
 }
+
+const BASE_URL = 'http://localhost:3000';
 
 @Injectable()
 export class FolderTreeService {
@@ -28,11 +27,19 @@ export class FolderTreeService {
     [
       {
         value: 'STDR001',
-        children: [{ value: '2018-07-15' }, { value: '2017-06-25' }, { value: '2016-05-18' }]
+        children: [
+          { value: '2018-07-15', children: [{ value: 'LE' }, { value: 'RE' }] },
+          { value: '2017-06-25', children: [{ value: 'LE' }, { value: 'RE' }] },
+          { value: '2016-05-18', children: [{ value: 'LE' }, { value: 'RE' }] }
+        ]
       },
       {
         value: 'STDR002',
-        children: [{ value: '2018-07-15' }, { value: '2017-06-25' }, { value: '2016-05-18' }]
+        children: [
+          { value: '2018-07-15', children: [{ value: 'LE' }, { value: 'RE' }] },
+          { value: '2017-06-25', children: [{ value: 'LE' }, { value: 'RE' }] },
+          { value: '2016-05-18', children: [{ value: 'LE' }, { value: 'RE' }] }
+        ]
       }
     ];
 
@@ -40,13 +47,21 @@ export class FolderTreeService {
     return [
       {
         name: 'STDR001_23556_131.img',
+        status: 'completed',
         updated: new Date('2/20/16'),
-        path: ['https://upload.wikimedia.org/wikipedia/en/2/25/MacularDegenerationFundus.jpg']
+        path: '/media/hdd2/Carol/datasets/CNTG_Fundus/CNTG001/LE/A8950825_20161102_173327_Color_L_001.tif'
       },
       {
         name: 'STDR001_23556_132.img',
+        status: 'reviewing',
         updated: new Date('1/18/16'),
-        path: ['https://material.angular.io/assets/img/examples/shiba2.jpg']
+        path: '/media/hdd2/Carol/datasets/CNTG_Fundus/CNTG001/RE/A8950825_20161102_173739_Color_R_001.tif'
+      },
+      {
+        name: 'STDR001_23556_132.img',
+        status: 'not_applicable',
+        updated: new Date('1/18/16'),
+        path: 'https://material.angular.io/assets/img/examples/shiba2.jpg'
       }
     ];
   }
@@ -83,11 +98,15 @@ export class FolderTreeService {
     });
   }
 
-  loadContent(pathArr: string[]): Observable<string> {
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next(pathArr[0]);
-      }, 500);
-    });
+  // loadContent(pathArr: string[]): Observable<string> {
+  //   return new Observable(observer => {
+  //     setTimeout(() => {
+  //       observer.next(pathArr[0]);
+  //     }, 500);
+  //   });
+  // }
+
+  getImage(path: string) {
+    return this.httpClient.get(`${BASE_URL}/studies/image/path${path}`);
   }
 }

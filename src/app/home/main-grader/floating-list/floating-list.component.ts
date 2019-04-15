@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { Image } from '@app/home/folder-tree.service';
-import { Subscription } from 'rxjs';
 import { FormSelectionService } from '../form-selection.service';
 
 @Component({
@@ -11,12 +10,26 @@ import { FormSelectionService } from '../form-selection.service';
 export class FloatingListComponent implements OnChanges, OnInit {
   @Input('images') images: Image[];
   @Output() clickOn = new EventEmitter();
+  selected: number;
 
   // TODO: move initial schema out of the loop
   schema: string = 'eyebrain';
 
+  display_icon(status: string): string {
+    if (status == 'completed') {
+      return 'check';
+    }
+    if (status == 'not_applicable') {
+      return 'block';
+    }
+    if (status == 'reviewing') {
+      return 'contact_support';
+    }
+    return 'note';
+  }
+
   ngOnChanges() {
-    this.imageClicked(undefined);
+    this.imageClicked(undefined, undefined);
   }
 
   constructor(private formSelectionService: FormSelectionService) {}
@@ -25,7 +38,8 @@ export class FloatingListComponent implements OnChanges, OnInit {
     this.formSelectionService.sendSchema(this.schema);
   }
 
-  imageClicked(image: {}) {
+  imageClicked(id: number, image: Image) {
+    this.selected = id;
     this.clickOn.emit({ image_info: image });
   }
 

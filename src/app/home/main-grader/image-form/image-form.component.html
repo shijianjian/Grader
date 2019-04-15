@@ -1,8 +1,9 @@
+<div class="stage"></div>
+<!-- <app-loader *ngIf='' [isLoading]="isLoading"></app-loader> -->
 <mat-card *ngIf="image != undefined">
   <mat-card-header>
     <mat-card-title>{{ image.name }}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image src="{{ image.src }}" alt="Photo" />
   <mat-card-content>
     <app-dynamic-json-form [json]="dynamicJSON"></app-dynamic-json-form>
   </mat-card-content>
