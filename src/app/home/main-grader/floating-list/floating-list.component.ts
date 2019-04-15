@@ -13,7 +13,8 @@ export class FloatingListComponent implements OnChanges, OnInit {
   selected: number;
 
   // TODO: move initial schema out of the loop
-  schema: string = 'eyebrain';
+  schema: string;
+  schemas: any[];
 
   display_icon(status: string): string {
     if (status == 'completed') {
@@ -35,7 +36,11 @@ export class FloatingListComponent implements OnChanges, OnInit {
   constructor(private formSelectionService: FormSelectionService) {}
 
   ngOnInit() {
-    this.formSelectionService.sendSchema(this.schema);
+    this.formSelectionService.getAllSchemas().subscribe((value: any[]) => {
+      this.schemas = value;
+      this.schema = this.schemas[0].value;
+      this.formSelectionService.sendSchema(this.schema);
+    });
   }
 
   imageClicked(id: number, image: Image) {

@@ -13,34 +13,11 @@ const BASE_URL = 'http://localhost:3000';
 export class FolderTreeService {
   constructor(private httpClient: HttpClient) {}
 
-  settings: TreeModelSettings = {
+  private settings: TreeModelSettings = {
     isCollapsedOnInit: true
   };
 
-  get_images(): Image[] {
-    return [
-      {
-        name: 'STDR001_23556_131.img',
-        status: 'completed',
-        updated: new Date('2/20/16'),
-        path: '/media/hdd2/Carol/datasets/CNTG_Fundus/CNTG001/LE/A8950825_20161102_173327_Color_L_001.tif'
-      },
-      {
-        name: 'STDR001_23556_132.img',
-        status: 'reviewing',
-        updated: new Date('1/18/16'),
-        path: '/media/hdd2/Carol/datasets/CNTG_Fundus/CNTG001/RE/A8950825_20161102_173739_Color_R_001.tif'
-      },
-      {
-        name: 'STDR001_23556_132.img',
-        status: 'not_applicable',
-        updated: new Date('1/18/16'),
-        path: 'https://material.angular.io/assets/img/examples/shiba2.jpg'
-      }
-    ];
-  }
-
-  ensemble_tree(project_title: string, folders: TreeModel[]): TreeModel {
+  private ensemble_tree(project_title: string, folders: TreeModel[]): TreeModel {
     return {
       value: project_title,
       settings: this.settings,
@@ -52,7 +29,8 @@ export class FolderTreeService {
     return this.httpClient.get(`${BASE_URL}/studies/directory/${project_title}`).pipe(
       map((body: any) => {
         console.log(body);
-        return folderTreeToTreeModel(body, 'directory');
+        let tree = folderTreeToTreeModel(body, 'directory');
+        return this.ensemble_tree(project_title, tree.children);
       })
     );
   }

@@ -29,6 +29,25 @@ export class FormSelectionService {
     }
   }
 
+  getAllSchemas(): Observable<any[]> {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next([
+          {
+            key: 'Eye Brain',
+            value: 'eyebrain',
+            disable: false
+          },
+          {
+            key: 'ETDRS',
+            value: 'etdrs',
+            disable: true
+          }
+        ]);
+      }, 500);
+    });
+  }
+
   eyebrainjson = [
     {
       key: 'radio',
