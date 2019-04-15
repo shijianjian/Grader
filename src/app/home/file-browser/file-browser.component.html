@@ -1,3 +1,4 @@
 <div class="app-tree-container">
+  <app-loader [isLoading]="isLoading"></app-loader>
   <tree [tree]="tree" (nodeSelected)="handleSelected($event)"></tree>
 </div>

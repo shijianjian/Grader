@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Image } from '@app/types/Image';
 import { TreeModel, TreeModelSettings } from 'ng2-tree';
 
-export interface Image {
-  name: string;
-  status?: string;
-  updated?: Date;
-  path?: string;
-  src?: string;
-}
+import { folderTreeToTreeModel, folderTreeToImage } from '@app/types/FolderTree';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -21,27 +16,6 @@ export class FolderTreeService {
   settings: TreeModelSettings = {
     isCollapsedOnInit: true
   };
-
-  tree: TreeModel[] =
-    // value: 'STDR Fundus',
-    [
-      {
-        value: 'STDR001',
-        children: [
-          { value: '2018-07-15', children: [{ value: 'LE' }, { value: 'RE' }] },
-          { value: '2017-06-25', children: [{ value: 'LE' }, { value: 'RE' }] },
-          { value: '2016-05-18', children: [{ value: 'LE' }, { value: 'RE' }] }
-        ]
-      },
-      {
-        value: 'STDR002',
-        children: [
-          { value: '2018-07-15', children: [{ value: 'LE' }, { value: 'RE' }] },
-          { value: '2017-06-25', children: [{ value: 'LE' }, { value: 'RE' }] },
-          { value: '2016-05-18', children: [{ value: 'LE' }, { value: 'RE' }] }
-        ]
-      }
-    ];
 
   get_images(): Image[] {
     return [
@@ -75,36 +49,22 @@ export class FolderTreeService {
   }
 
   getTree(project_title: string): Observable<TreeModel> {
-    return new Observable(observer => {
-      setTimeout(() => {
-        let tree = this.ensemble_tree(project_title, this.tree);
-        observer.next(tree);
-      }, 500);
-    });
-    //   return this.httpClient
-    //     .cache()
-    //     .get(routes.quote(context))
-    //     .pipe(
-    //       map((body: any) => body.value),
-    //       catchError(() => of('Error, could not load joke :-('))
-    //     );
+    return this.httpClient.get(`${BASE_URL}/studies/directory/${project_title}`).pipe(
+      map((body: any) => {
+        console.log(body);
+        return folderTreeToTreeModel(body, 'directory');
+      })
+    );
   }
 
-  loadFolder(pathArr: string[]): Observable<Image[]> {
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next(this.get_images());
-      }, 500);
-    });
+  loadFolder(path: string): Observable<Image[]> {
+    return this.httpClient.get(`${BASE_URL}/studies/directory${path}`).pipe(
+      map((body: any) => {
+        console.log(body);
+        return folderTreeToImage(body);
+      })
+    );
   }
-
-  // loadContent(pathArr: string[]): Observable<string> {
-  //   return new Observable(observer => {
-  //     setTimeout(() => {
-  //       observer.next(pathArr[0]);
-  //     }, 500);
-  //   });
-  // }
 
   getImage(path: string) {
     return this.httpClient.get(`${BASE_URL}/studies/image/path${path}`);

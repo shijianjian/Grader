@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, ElementRef } from '@angular/core';
-import { Image, FolderTreeService } from '@app/home/folder-tree.service';
+import { FolderTreeService } from '@app/home/folder-tree.service';
+import { Image } from '@app/types/Image';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { FormSelectionService } from '../form-selection.service';
@@ -37,12 +38,11 @@ export class ImageFormComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    const stage: HTMLElement = this.elementRef.nativeElement.querySelector('.stage');
+    if (stage.childNodes.length != 0) {
+      stage.removeChild(stage.childNodes.item(0));
+    }
     if (this._image != undefined) {
-      const stage: HTMLElement = this.elementRef.nativeElement.querySelector('.stage');
-      if (stage.childNodes.length != 0) {
-        stage.removeChild(stage.childNodes.item(0));
-      }
-
       this.folderTreeService
         .getImage(this._image.path)
         .pipe(take(1))

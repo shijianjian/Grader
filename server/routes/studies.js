@@ -13,46 +13,29 @@ const folderNameMap = {
   CNTG: 'CNTG_Fundus'
 };
 
-router.get('/:study/directory', (req, res, next) => {
-  if (req.params['study'].toUpperCase() in folderNameMap) {
-    console.log(`Dir: ${BASE_DIRECTORY}/${folderNameMap[req.params['study'].toUpperCase()]}`);
-    const tree = dirTree(`${BASE_DIRECTORY}/${folderNameMap[req.params['study'].toUpperCase()]}`);
-    res.json(tree);
+// Load the tree structure of a folder by the study code
+router.get('/directory/:study*', (req, res, next) => {
+  let path;
+  if (req.params['study'].toUpperCase() in folderNameMap && !req.params['0']) {
+    path = `${BASE_DIRECTORY}/${folderNameMap[req.params['study'].toUpperCase()]}`;
   } else {
-    var err = new Error(`Code '${req.params['study']}' not found`);
-    err.status = 404;
-    next(err);
+    path = `/${req.params['study']}${req.params['0']}`;
   }
+  console.log(path);
+  const tree = dirTree(path, { exclude: /^\./ });
+  res.status = 200;
+  res.json(tree);
 });
 
 // http://localhost:3000/studies/image/path/THE_TRUE_PATH
 router.get('/image/:path*', (req, res, next) => {
   console.log(req.params['0']);
   if (fs.lstatSync(req.params['0']).isFile()) {
-    // var mime_type = 'image/tiff';
-    // With JIMP
-    // Jimp.read(req.params['0'], (err, data) => {
-    //   res.write(`<html><body><img src="data:${mime_type};base64,`)
-    //   console.log(data.bitmap)
-    //   res.write(data.bitmap['data'].toString('base64'));
-    //   res.end('"/></body></html>');
-    // })
     fs.readFile(req.params['0'], (err, data) => {
       if (err) throw err;
       const content = encode(data.buffer);
       res.json({ data: content });
     });
-
-    // fs.readFile(req.params['0'], (err, data) => {
-    //   if (err) throw err; // Fail if the file can't be read.
-    //   // res.writeHead(200, {'Content-Type': 'image/jpeg'});
-    //   // res.end(data); // Send the file data to the browser.
-    //   var mime_type = 'image/tiff';
-    //   if (req.params['0'].endsWith('.tif')) {mime_type = 'image/tiff';}
-    //   res.write(`<html><body><img src="data:${mime_type};base64,`)
-    //   res.write(Buffer.from(data).toString('base64'));
-    //   res.end('"/></body></html>');
-    // });
   } else {
     var err = new Error(`File '${req.params['0']}' not found.`);
     err.status = 404;

@@ -23,3 +23,8 @@ mat-nav-list > mat-list-item:hover {
   max-height: 40vh;
   overflow-y: scroll;
 }
+
+::ng-deep .mat-line {
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}

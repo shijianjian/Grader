@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
-import { Image } from '@app/home/folder-tree.service';
+import { Image } from '@app/types/Image';
 import { FormSelectionService } from '../form-selection.service';
 
 @Component({

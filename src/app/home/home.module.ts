@@ -3,24 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '@app/core';
-import { SharedModule } from '@app/shared';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
 import { FileBrowserModule } from './file-browser/file-browser.module';
 import { MainGraderModule } from './main-grader/main-grader.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    CoreModule,
-    SharedModule,
-    HomeRoutingModule,
-    FileBrowserModule,
-    MainGraderModule
-  ],
+  imports: [CommonModule, TranslateModule, CoreModule, HomeRoutingModule, FileBrowserModule, MainGraderModule],
   declarations: [HomeComponent],
-  providers: [QuoteService]
+  providers: []
 })
 export class HomeModule {}
