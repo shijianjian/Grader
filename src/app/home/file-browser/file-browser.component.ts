@@ -22,13 +22,7 @@ export class FileBrowserComponent implements OnInit {
   public tree: TreeModel;
   constructor(private folderTreeService: FolderTreeService) {}
 
-  ngOnInit() {
-    this.isLoading = true;
-    this.folderTreeService.getTree('cntg').subscribe((tree: TreeModel) => {
-      this.tree = tree;
-      this.isLoading = false;
-    });
-  }
+  ngOnInit() {}
 
   handleSelected(event: NodeSelectedEvent) {
     if (event.node.children.length == 0) {
@@ -44,5 +38,13 @@ export class FileBrowserComponent implements OnInit {
       .subscribe((images: Image[]) => {
         this.loadImages.emit({ images: images });
       });
+  }
+
+  onStudyChange(event: any) {
+    this.isLoading = true;
+    this.folderTreeService.getTree(event['study']).subscribe((tree: TreeModel) => {
+      this.tree = tree;
+      this.isLoading = false;
+    });
   }
 }

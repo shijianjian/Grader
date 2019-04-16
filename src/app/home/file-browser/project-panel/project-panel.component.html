@@ -1,0 +1,17 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="expand" (opened)="setExpand(true)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>Study</b>
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ current_selection | uppercase }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-select (selectionChange)="onSelctionChange($event)" [(value)]="current_selection">
+        <mat-option [value]="study.value" *ngFor="let study of studies; let i = index">{{ study.key }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-expansion-panel>
+</mat-accordion>

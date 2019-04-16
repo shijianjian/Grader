@@ -50,6 +50,45 @@ export class FormSelectionService {
 
   eyebrainjson = [
     {
+      key: 'gradability',
+      label: 'Gradability',
+      type: 'radio',
+      value: 'gradable',
+      items: [
+        {
+          key: 'gradable',
+          label: 'Gradable'
+        },
+        {
+          key: 'ungradable',
+          label: 'Ungradable'
+        }
+      ],
+      required: true,
+      order: 1
+    },
+    {
+      key: 'pathology',
+      label: 'Pathology',
+      type: 'radio',
+      value: 'no',
+      items: [
+        {
+          key: 'yes',
+          label: 'Yes'
+        },
+        {
+          key: 'no',
+          label: 'No'
+        }
+      ],
+      required: true,
+      order: 2
+    }
+  ];
+
+  ajson = [
+    {
       key: 'radio',
       label: 'Radio',
       type: 'radio',
@@ -82,27 +121,6 @@ export class FormSelectionService {
       value: '',
       required: true,
       order: 3
-    }
-  ];
-
-  ajson = [
-    {
-      key: 'radio',
-      label: 'Radio',
-      type: 'radio',
-      value: '',
-      items: [
-        {
-          key: 'gradable',
-          label: 'Gradable'
-        },
-        {
-          key: 'ungradable',
-          label: 'Ungradable'
-        }
-      ],
-      required: true,
-      order: 1
     }
   ];
 }

@@ -21,7 +21,7 @@ mat-nav-list > mat-list-item:hover {
 
 #nav-list {
   max-height: 40vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 ::ng-deep .mat-line {

@@ -1,4 +1,6 @@
 <div class="app-tree-container">
+  <app-project-panel (studyChange)="onStudyChange($event)"></app-project-panel>
+  <p *ngIf="!tree" style="padding-left: 1em;">Select a study from above.</p>
   <app-loader [isLoading]="isLoading"></app-loader>
   <tree [tree]="tree" (nodeSelected)="handleSelected($event)"></tree>
 </div>

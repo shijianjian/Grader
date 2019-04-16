@@ -4,6 +4,7 @@
       <!-- <input type="{{row.type}}" formControlName="value" class="form-control"  /> -->
       <!-- the same view can be shown in more than one case -->
       <mat-radio-group *ngSwitchCase="'radio'" [formControlName]="row.key">
+        <mat-label style="white-space:pre;">{{ row.label | truncate: 20 }}</mat-label>
         <mat-radio-button [value]="item.key" *ngFor="let item of row.items; let i = index">{{
           item.label
         }}</mat-radio-button>

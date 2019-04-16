@@ -19,7 +19,7 @@ export class FolderTreeService {
 
   private ensemble_tree(project_title: string, folders: TreeModel[]): TreeModel {
     return {
-      value: project_title,
+      value: project_title.toUpperCase(),
       settings: this.settings,
       children: folders
     };
