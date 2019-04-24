@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, ElementRef } from '@angular/core';
-import { FolderTreeService } from '@app/home/folder-tree.service';
+import { FolderTreeService } from '@app/applications/grader/folder-tree.service';
 import { Image } from '@app/types/Image';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { FormSelectionService } from '../form-selection.service';
+
 // https://blog.lysender.com/2018/07/angular-6-cannot-resolve-crypto-fs-net-path-stream-when-building-angular/
 var Tiff = require('assets/tiff.js/tiff.min.js');
 var { decode } = require('base64-arraybuffer');

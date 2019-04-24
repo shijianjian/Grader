@@ -1,0 +1,34 @@
+<mat-card class="card">
+  <mat-card-header>
+    <div mat-card-avatar class="card-header" [style.background-color]="app_info.background_colour">
+      <span [style.color]="app_info.text_colour">{{ app_info.title[0] | uppercase }}</span>
+    </div>
+    <mat-card-title>{{ app_info.title }}</mat-card-title>
+  </mat-card-header>
+  <svg
+    mat-card-image
+    attr.height="{{ font_size * app_info.title.split(' ').length }}em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g requiredFeatures="http://www.w3.org/Graphics/SVG/feature/1.2/#TextFlow">
+      <rect
+        x="0"
+        y="0"
+        width="100%"
+        attr.height="{{ font_size * app_info.title.split(' ').length }}em"
+        attr.fill="{{ app_info.background_colour }}"
+      ></rect>
+      <text x="0" y="0" font-family="Verdana" attr.font-size="{{ font_size }}em" attr.fill="{{ app_info.text_colour }}">
+        <tspan x="0" dy="0.98em" *ngFor="let ttext of app_info.title.split(' '); let i = index">{{ ttext }}</tspan>
+      </text>
+    </g>
+  </svg>
+  <mat-card-content>
+    <p>
+      {{ app_info.description }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button [routerLink]="[app_info.router_link]" routerLinkActive="link-active">GO</a>
+  </mat-card-actions>
+</mat-card>

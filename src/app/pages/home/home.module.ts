@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '@app/core';
+import { GraderModule } from '@app/applications/grader/grader.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { FileBrowserModule } from './file-browser/file-browser.module';
-import { MainGraderModule } from './main-grader/main-grader.module';
+import { AppCardModule } from './app-card/app-card.module';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, CoreModule, HomeRoutingModule, FileBrowserModule, MainGraderModule],
+  imports: [CommonModule, TranslateModule, CoreModule, HomeRoutingModule, GraderModule, AppCardModule],
   declarations: [HomeComponent],
   providers: []
 })

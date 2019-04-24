@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+
+import { AppInfo } from '@app/types/AppInfo';
 
 @Component({
   selector: 'app-home',
@@ -14,4 +15,14 @@ export class HomeComponent {
   loadImages(event: Event) {
     this.images = event['images'];
   }
+
+  app_infos: AppInfo[] = [
+    {
+      title: 'Medical Image Grading Platform',
+      background_colour: '#f0904e',
+      text_colour: '#eff4f7',
+      description: 'Medical Image Grading Platform',
+      router_link: '/grader'
+    }
+  ];
 }

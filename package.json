@@ -1,5 +1,5 @@
 {
-  "name": "ng-x-rocket",
+  "name": "app",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -47,7 +47,6 @@
     "ng2-tree": "^2.0.0-rc.11",
     "rxjs": "^6.3.1",
     "rxjs-compat": "^6.4.0",
-    "tiff.js": "^1.0.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

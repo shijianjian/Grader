@@ -42,9 +42,12 @@ export class FileBrowserComponent implements OnInit {
 
   onStudyChange(event: any) {
     this.isLoading = true;
-    this.folderTreeService.getTree(event['study']).subscribe((tree: TreeModel) => {
-      this.tree = tree;
-      this.isLoading = false;
-    });
+    this.folderTreeService.getTree(event['study']).subscribe(
+      (tree: TreeModel) => {
+        this.tree = tree;
+        this.isLoading = false;
+      },
+      error => {}
+    );
   }
 }
